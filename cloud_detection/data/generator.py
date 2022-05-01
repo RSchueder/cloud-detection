@@ -3,12 +3,12 @@ import xarray as xr
 from PIL import Image
 from tensorflow import keras
 
-from cloud_detection.config import NUM_CLASSES
+from cloud_detection.config import NUM_CLASSES, NUM_BANDS
 
 
 class DataGenerator(keras.utils.Sequence):
     """
-    Clas to create samples and target data.
+    Class to create samples and target data.
     """
 
     def __init__(self, batch_size, img_size, sample_paths, target_paths):
@@ -34,24 +34,24 @@ class DataGenerator(keras.utils.Sequence):
         batch_sample_paths = self.sample_paths[pos:pos + self.batch_size]
         batch_target_paths = self.target_paths[pos:pos + self.batch_size]
 
-        X = np.zeros((self.batch_size,) + self.img_size + (10,), dtype="float32")
-        for j, path in enumerate(batch_sample_paths):
+        X = np.zeros((self.batch_size,) + self.img_size + (NUM_BANDS,), dtype="float32")
+        for idx, path in enumerate(batch_sample_paths):
             dataset = xr.open_dataset(path)
             img = dataset.band_data.values
             img = np.moveaxis(img, [0], [2])
-            X[j] = img
+            X[idx] = img
 
         target = np.zeros((self.batch_size,) + self.img_size + (NUM_CLASSES,), dtype="uint8")
-        for j, path in enumerate(batch_target_paths):
-            
+        for idx, path in enumerate(batch_target_paths):
+
             image = Image.open(path)
             image = np.asarray(image)
             one_hot_mask_data = np.zeros([NUM_CLASSES] + list(image.shape))
             for pclass in range(NUM_CLASSES):
                 pslice = one_hot_mask_data[pclass, :, :]
                 pslice[image == pclass] = 1
-                one_hot_mask_data[pclass,:,:] = pslice
+                one_hot_mask_data[pclass, :, :] = pslice
 
-            target[j] = np.moveaxis(one_hot_mask_data,[0],[2])
-            
+            target[idx] = np.moveaxis(one_hot_mask_data, [0], [2])
+
         return X, target

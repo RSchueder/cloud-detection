@@ -1,4 +1,4 @@
-name: mpc-mcd
+name: cloud-detection
 channels:
  - conda-forge
 dependencies:

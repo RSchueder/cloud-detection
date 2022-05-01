@@ -6,21 +6,20 @@ def convolution(image, filters=64):
     """
     Implements Conv2D -> Batch Normalization -> Conv2D block.
     Args:
-        image (array): and image array
+        image (array): An image array.
         filters (int): Number of output filters in convolution.
 
     Returns:
-        block activation
+        Block activation
     """
-    convolution = Conv2D(filters, kernel_size = (3,3), padding = "same")(image)
+    convolution = Conv2D(filters, kernel_size=(3, 3), padding="same")(image)
     batch_normalization = BatchNormalization()(convolution)
     activation = ReLU()(batch_normalization)
-    
-    # Taking first input and implementing the second conv block
-    convolution = Conv2D(filters, kernel_size = (3,3), padding = "same")(activation)
+
+    convolution = Conv2D(filters, kernel_size=(3, 3), padding="same")(activation)
     batch_normalization = BatchNormalization()(convolution)
     activation = ReLU()(batch_normalization)
-    
+
     return activation
 
 
@@ -28,7 +27,7 @@ def encoder(input, filters=64):
     """
     Implements an encoder block.
     Args:
-        image (array): and image array
+        image (array): An image array.
         filters (int): Number of output filters in convolution.
 
     Returns:
@@ -36,14 +35,14 @@ def encoder(input, filters=64):
     """
 
     encoding = convolution(input, filters)
-    max_pool = MaxPooling2D(strides = (2,2))(encoding)
+    max_pool = MaxPooling2D(strides=(2, 2))(encoding)
 
     return encoding, max_pool
 
 
 def decoder(array, skip_input, filters=64):
     """
-    Implementes a decoder block
+    Implementes a decoder block.
     Args:
         array (array): Upsample from previous layer.
         skip_input (array): inpout from encoder-side skip layer

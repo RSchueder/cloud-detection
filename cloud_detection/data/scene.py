@@ -17,12 +17,11 @@ for val_slice in range(0, cube.shape[0]):
 
 class Scene:
     """
-    Class to implement Landsat 8 scene management
+    Class to implement Landsat 8 scene data structure.
     """
 
     def __init__(self, path):
         """
-
         Args:
             path (str): Path to landsat 8 scene file (.tif)
         """
@@ -41,7 +40,7 @@ class Scene:
         Returns:
             Top of atmosphere reflectance correction parameter dictionary.
         """
-        toa_dict = {}
+        toa_dict = dict()
 
         with open(self.metadata_file, 'r') as f:
             lines = f.readlines()

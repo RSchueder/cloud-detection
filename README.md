@@ -10,24 +10,29 @@ for GPU-based neural net computations. So we use conda in Windows.
 You can obtain the project environment via:
 ```
 conda env create -f requirements.yml
-conda activate mpc-mcd
+conda activate cloud-detection
 ```
-
-# Running
-Use the demo notebook `detect_clouds_tensorflow.ipynb`.
-
-# Improvements
-* need k-fold validation
-* different achitectures could be examined (Mask R-CNN)
-* SGD loss function?
-* Some labels look quite por
-* should I eliminate some of the other classes?
-* Data augmentation (more examples)!
-* Learning rate decay
-* would be good to fix the missing edge of all frames
-
-# Hardware Environment
+**Hardware Environment**
 * CUDA 11.6
-* CUDNN 64.8
+* CUDNN 8.3
 * RTX 2070 Super, 8 GB VRAM
 
+# Running
+Use the demo notebook `detect_clouds_tensorflow.ipynb`. You must have unzipped the SPARCS data into the `./data` folder
+
+
+# Improvements/Next Steps
+* Need k-fold validation (would use k=5 and ensure each image ends up in a single fold test set)
+* Would employ hyperparameter optimization
+* Different achitectures could be examined (for example, Mask R-CNN)
+* Ensemble could be created using multiple networks
+* Confirm that CNN performs better as compared to pixel-based classifiers
+* Could try different loss functions like stochatic gradient descent
+* Some labels look quite poor, figure out when these are the culprit
+* Identify under which conditions the model performs most poorly
+* Test the elimination of classes that are not clouds or cloud shadows
+* Data augmentation (more examples)!
+* Learning rate decay tuning
+* Fix the missing edge of all scenes
+* Make implementation more OOP
+* Make tests
