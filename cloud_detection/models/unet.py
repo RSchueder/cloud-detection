@@ -2,13 +2,21 @@ from tensorflow.keras.layers import Input, Conv2D
 from tensorflow.keras.models import Model
 
 from cloud_detection.config import NUM_CLASSES
-from cloud_detection.data.generator import data_augmentation
 from cloud_detection.models.components import encoder, decoder, convolution
 
 
 def UNet(image_size):
+    """
+    Implements the UNet architecture.
+
+    Args:
+        image_size (tuple(int, int)): Size of the input images
+
+    Returns:
+        tensorflow.keras.models.Model
+    """
+
     image = Input(shape=image_size)
-    #x = data_augmentation(image)
 
     # encoding sequence
     skip1, encoder_1 = encoder(image, 64)

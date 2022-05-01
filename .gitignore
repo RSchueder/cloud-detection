@@ -132,3 +132,5 @@ dmypy.json
 data/*
 .idea/
 *.h5
+UNET_MODEL
+detect_clouds_pytorch.ipynb

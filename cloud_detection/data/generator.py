@@ -1,16 +1,25 @@
 import numpy as np
-import tensorflow as tf
 import xarray as xr
 from PIL import Image
 from tensorflow import keras
-from tensorflow.keras import layers
 
 from cloud_detection.config import NUM_CLASSES
 
 
 class DataGenerator(keras.utils.Sequence):
+    """
+    Clas to create samples and target data.
+    """
 
     def __init__(self, batch_size, img_size, sample_paths, target_paths):
+        """
+
+        Args:
+            batch_size (int): The batch size.
+            img_size (tuple(int, int)): The input image size.
+            sample_paths (list): A list of paths to sample data.
+            target_paths (list): A list of paths to target data.
+        """
         self.batch_size = batch_size
         self.img_size = img_size
         self.sample_paths = sample_paths
@@ -46,10 +55,3 @@ class DataGenerator(keras.utils.Sequence):
             target[j] = np.moveaxis(one_hot_mask_data,[0],[2])
             
         return X, target
-
-
-
-data_augmentation = tf.keras.Sequential([
-    layers.RandomFlip("horizontal_and_vertical"),
-    layers.RandomRotation(0.2),
-])
