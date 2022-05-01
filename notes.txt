@@ -1,0 +1,10 @@
+need k-fold validation
+different achitectures could be examined (name them)
+SGD loss function?
+are labels kind of bad?
+should I eliminate some of the other classes?
+data augmentation made things much worse, probably did something wrong
+LR decay good enough?
+More epochs?
+More examples
+would be good to fix the missing edge of all frames
